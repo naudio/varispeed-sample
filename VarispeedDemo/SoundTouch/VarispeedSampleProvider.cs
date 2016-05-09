@@ -16,7 +16,7 @@ namespace VarispeedDemo.SoundTouch
 
         public VarispeedSampleProvider(ISampleProvider sourceProvider, int readDurationMilliseconds, SoundTouchProfile soundTouchProfile)
         {
-            soundTouch = new VarispeedDemo.SoundTouch.SoundTouch();
+            soundTouch = new SoundTouch();
             // explore what the default values are before we change them:
             //Debug.WriteLine(String.Format("SoundTouch Version {0}", soundTouch.VersionString));
             //Debug.WriteLine("Use QuickSeek: {0}", soundTouch.GetUseQuickSeek());
