@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using NAudio.Wave;
 using VarispeedDemo.SoundTouch;
@@ -16,14 +9,19 @@ namespace VarispeedDemo
     {
         private IWavePlayer wavePlayer;
         private VarispeedSampleProvider speedControl;
+        private AudioFileReader reader;
 
         public Form1()
         {
             InitializeComponent();
-            EnableControls(false);
+            timer1.Interval = 500;
+            timer1.Start();
+
             comboBoxModes.Items.Add("Speed");
             comboBoxModes.Items.Add("Tempo");
             comboBoxModes.SelectedIndex = 0;
+
+            EnableControls(false);
         }
 
         private void OnButtonPlayClick(object sender, EventArgs e)
@@ -90,11 +88,26 @@ namespace VarispeedDemo
 
         private void LoadFile()
         {
+            reader?.Dispose();
+            speedControl?.Dispose();
+            reader = null;
+            speedControl = null;
+
             var file = SelectFile();
             if (file == null) return;
-            var audioFile = new AudioFileReader(file);
+            reader = new AudioFileReader(file);
+            trackBarPlaybackPosition.Value = 0;
+            trackBarPlaybackPosition.Maximum = (int) (reader.TotalTime.TotalSeconds + 0.5);
             var useTempo = comboBoxModes.SelectedIndex == 1;
-            speedControl = new VarispeedSampleProvider(audioFile, 100, new SoundTouchProfile(useTempo, false));
+            speedControl = new VarispeedSampleProvider(reader, 100, new SoundTouchProfile(useTempo, false));
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (reader != null)
+            {
+                trackBarPlaybackPosition.Value = (int) reader.CurrentTime.TotalSeconds;
+            }
         }
     }
 }

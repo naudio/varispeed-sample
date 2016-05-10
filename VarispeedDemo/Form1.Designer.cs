@@ -28,12 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.buttonPlay = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.buttonLoad = new System.Windows.Forms.Button();
             this.comboBoxModes = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.trackBarPlaybackPosition = new System.Windows.Forms.TrackBar();
+            this.label2 = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarPlaybackPosition)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonPlay
@@ -85,19 +91,55 @@
             this.comboBoxModes.Size = new System.Drawing.Size(121, 21);
             this.comboBoxModes.TabIndex = 4;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(21, 60);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(85, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Playback Speed";
+            // 
+            // trackBarPlaybackPosition
+            // 
+            this.trackBarPlaybackPosition.Location = new System.Drawing.Point(18, 137);
+            this.trackBarPlaybackPosition.Maximum = 100;
+            this.trackBarPlaybackPosition.Name = "trackBarPlaybackPosition";
+            this.trackBarPlaybackPosition.Size = new System.Drawing.Size(225, 45);
+            this.trackBarPlaybackPosition.SmallChange = 5;
+            this.trackBarPlaybackPosition.TabIndex = 2;
+            this.trackBarPlaybackPosition.TickFrequency = 5;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(21, 121);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(91, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Playback Position";
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(423, 262);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBoxModes);
             this.Controls.Add(this.buttonLoad);
+            this.Controls.Add(this.trackBarPlaybackPosition);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.buttonStop);
             this.Controls.Add(this.buttonPlay);
             this.Name = "Form1";
             this.Text = "NAudio SoundTouch Demo";
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarPlaybackPosition)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -110,6 +152,10 @@
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.Button buttonLoad;
         private System.Windows.Forms.ComboBox comboBoxModes;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TrackBar trackBarPlaybackPosition;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
