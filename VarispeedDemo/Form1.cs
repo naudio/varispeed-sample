@@ -20,6 +20,10 @@ namespace VarispeedDemo
         public Form1()
         {
             InitializeComponent();
+            EnableControls(false);
+            comboBoxModes.Items.Add("Speed");
+            comboBoxModes.Items.Add("Tempo");
+            comboBoxModes.SelectedIndex = 0;
         }
 
         private void OnButtonPlayClick(object sender, EventArgs e)
@@ -27,16 +31,35 @@ namespace VarispeedDemo
             if (wavePlayer == null)
             {
                 wavePlayer = new WaveOutEvent();
+                wavePlayer.PlaybackStopped += WavePlayerOnPlaybackStopped;
             }
             if (speedControl == null)
             {
-                var file = SelectFile();
-                if (file == null) return;
-                var audioFile = new AudioFileReader(file);
-                speedControl = new VarispeedSampleProvider(audioFile, 100, new SoundTouchProfile(false, false));
-                wavePlayer.Init(speedControl);
+                LoadFile();
+                if (speedControl == null) return;
             }
+            
+            wavePlayer.Init(speedControl);
+            
             wavePlayer.Play();
+            EnableControls(true);
+        }
+
+        private void WavePlayerOnPlaybackStopped(object sender, StoppedEventArgs stoppedEventArgs)
+        {
+            if (stoppedEventArgs.Exception != null)
+            {
+                MessageBox.Show(stoppedEventArgs.Exception.Message, "Playback Stopped Unexpectedly");
+            }
+            EnableControls(false);
+        }
+
+        private void EnableControls(bool isPlaying)
+        {
+            buttonPlay.Enabled = !isPlaying;
+            buttonLoad.Enabled = !isPlaying;
+            buttonStop.Enabled = isPlaying;
+            comboBoxModes.Enabled = !isPlaying;
         }
 
         private string SelectFile()
@@ -58,6 +81,20 @@ namespace VarispeedDemo
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             speedControl.PlaybackRate = 0.5f + trackBar1.Value*0.1f;
+        }
+
+        private void OnButtonLoadClick(object sender, EventArgs e)
+        {
+            LoadFile();
+        }
+
+        private void LoadFile()
+        {
+            var file = SelectFile();
+            if (file == null) return;
+            var audioFile = new AudioFileReader(file);
+            var useTempo = comboBoxModes.SelectedIndex == 1;
+            speedControl = new VarispeedSampleProvider(audioFile, 100, new SoundTouchProfile(useTempo, false));
         }
     }
 }

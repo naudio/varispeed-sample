@@ -108,8 +108,6 @@ namespace VarispeedDemo.SoundTouch
                 else
                 {
                     soundTouch.SetRate(value);
-                    //var correction = GetPitchCorrection(value);
-                    //soundTouch.SetPitchOctaves(correction);
                 }
             }
         }
