@@ -109,5 +109,14 @@ namespace VarispeedDemo
                 trackBarPlaybackPosition.Value = (int) reader.CurrentTime.TotalSeconds;
             }
         }
+
+        private void trackBarPlaybackPosition_Scroll(object sender, EventArgs e)
+        {
+            if (reader != null)
+            {
+                reader.CurrentTime = TimeSpan.FromSeconds(trackBarPlaybackPosition.Value);
+                speedControl.Reposition();
+            }
+        }    
     }
 }

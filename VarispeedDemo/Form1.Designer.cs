@@ -109,6 +109,7 @@
             this.trackBarPlaybackPosition.SmallChange = 5;
             this.trackBarPlaybackPosition.TabIndex = 2;
             this.trackBarPlaybackPosition.TickFrequency = 5;
+            this.trackBarPlaybackPosition.Scroll += new System.EventHandler(this.trackBarPlaybackPosition_Scroll);
             // 
             // label2
             // 
