@@ -5,13 +5,13 @@ using VarispeedDemo.SoundTouch;
 
 namespace VarispeedDemo
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private IWavePlayer wavePlayer;
         private VarispeedSampleProvider speedControl;
         private AudioFileReader reader;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             timer1.Interval = 500;

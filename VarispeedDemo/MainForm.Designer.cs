@@ -1,6 +1,6 @@
 ﻿namespace VarispeedDemo
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -124,7 +124,7 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -137,7 +137,7 @@
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.buttonStop);
             this.Controls.Add(this.buttonPlay);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "NAudio SoundTouch Demo";
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPlaybackPosition)).EndInit();
