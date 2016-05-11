@@ -11,17 +11,27 @@ namespace VarispeedDemo
         private VarispeedSampleProvider speedControl;
         private AudioFileReader reader;
 
+
         public MainForm()
         {
             InitializeComponent();
             timer1.Interval = 500;
             timer1.Start();
+            Closing += OnMainFormClosing;
 
             comboBoxModes.Items.Add("Speed");
             comboBoxModes.Items.Add("Tempo");
             comboBoxModes.SelectedIndex = 0;
 
             EnableControls(false);
+            
+        }
+
+        private void OnMainFormClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            wavePlayer?.Dispose();
+            speedControl?.Dispose();
+            reader?.Dispose();
         }
 
         private void OnButtonPlayClick(object sender, EventArgs e)
@@ -64,11 +74,7 @@ namespace VarispeedDemo
         {
             var ofd = new OpenFileDialog();
             ofd.Filter = "MP3 Files|*.mp3";
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                return ofd.FileName;
-            }
-            return null;
+            return ofd.ShowDialog() == DialogResult.OK ? ofd.FileName : null;
         }
 
         private void OnButtonStopClick(object sender, EventArgs e)
@@ -76,9 +82,10 @@ namespace VarispeedDemo
             wavePlayer?.Stop();
         }
 
-        private void trackBar1_Scroll(object sender, EventArgs e)
+        private void OnTrackBarPlaybackRateScroll(object sender, EventArgs e)
         {
-            speedControl.PlaybackRate = 0.5f + trackBar1.Value*0.1f;
+            speedControl.PlaybackRate = 0.5f + trackBarPlaybackRate.Value*0.1f;
+            labelPlaybackSpeed.Text = $"x{speedControl.PlaybackRate:F2}";
         }
 
         private void OnButtonLoadClick(object sender, EventArgs e)
@@ -96,6 +103,7 @@ namespace VarispeedDemo
             var file = SelectFile();
             if (file == null) return;
             reader = new AudioFileReader(file);
+            DisplayPosition();
             trackBarPlaybackPosition.Value = 0;
             trackBarPlaybackPosition.Maximum = (int) (reader.TotalTime.TotalSeconds + 0.5);
             var useTempo = comboBoxModes.SelectedIndex == 1;
@@ -107,7 +115,13 @@ namespace VarispeedDemo
             if (reader != null)
             {
                 trackBarPlaybackPosition.Value = (int) reader.CurrentTime.TotalSeconds;
+                DisplayPosition();
             }
+        }
+
+        private void DisplayPosition()
+        {
+            labelPosition.Text = reader.CurrentTime.ToString("mm\\:ss");
         }
 
         private void trackBarPlaybackPosition_Scroll(object sender, EventArgs e)
@@ -117,6 +131,15 @@ namespace VarispeedDemo
                 reader.CurrentTime = TimeSpan.FromSeconds(trackBarPlaybackPosition.Value);
                 speedControl.Reposition();
             }
-        }    
+        }
+
+        private void comboBoxModes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (speedControl != null)
+            {
+                var useTempo = comboBoxModes.SelectedIndex == 1;
+                speedControl.SetSoundTouchProfile(new SoundTouchProfile(useTempo, false));
+            }
+        }
     }
 }

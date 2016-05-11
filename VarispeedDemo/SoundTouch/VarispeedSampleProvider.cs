@@ -33,7 +33,7 @@ namespace VarispeedDemo.SoundTouch
 
         public int Read(float[] buffer, int offset, int count)
         {
-            if (playbackRate == 0)
+            if (playbackRate == 0) // play silence
             {
                 for (int n = 0; n < count; n++)
                 {
@@ -79,7 +79,7 @@ namespace VarispeedDemo.SoundTouch
             return samplesRead;
         }
 
-        public WaveFormat WaveFormat { get { return sourceProvider.WaveFormat; } }
+        public WaveFormat WaveFormat => sourceProvider.WaveFormat;
 
         public float PlaybackRate
         {

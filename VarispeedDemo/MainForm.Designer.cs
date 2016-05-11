@@ -31,14 +31,16 @@
             this.components = new System.ComponentModel.Container();
             this.buttonPlay = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.trackBarPlaybackRate = new System.Windows.Forms.TrackBar();
             this.buttonLoad = new System.Windows.Forms.Button();
             this.comboBoxModes = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.trackBarPlaybackPosition = new System.Windows.Forms.TrackBar();
             this.label2 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            this.labelPlaybackSpeed = new System.Windows.Forms.Label();
+            this.labelPosition = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarPlaybackRate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPlaybackPosition)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,15 +64,15 @@
             this.buttonStop.UseVisualStyleBackColor = true;
             this.buttonStop.Click += new System.EventHandler(this.OnButtonStopClick);
             // 
-            // trackBar1
+            // trackBarPlaybackRate
             // 
-            this.trackBar1.Location = new System.Drawing.Point(13, 76);
-            this.trackBar1.Maximum = 20;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(230, 45);
-            this.trackBar1.TabIndex = 2;
-            this.trackBar1.Value = 5;
-            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            this.trackBarPlaybackRate.Location = new System.Drawing.Point(13, 76);
+            this.trackBarPlaybackRate.Maximum = 20;
+            this.trackBarPlaybackRate.Name = "trackBarPlaybackRate";
+            this.trackBarPlaybackRate.Size = new System.Drawing.Size(230, 45);
+            this.trackBarPlaybackRate.TabIndex = 2;
+            this.trackBarPlaybackRate.Value = 5;
+            this.trackBarPlaybackRate.Scroll += new System.EventHandler(this.OnTrackBarPlaybackRateScroll);
             // 
             // buttonLoad
             // 
@@ -86,10 +88,11 @@
             // 
             this.comboBoxModes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxModes.FormattingEnabled = true;
-            this.comboBoxModes.Location = new System.Drawing.Point(273, 76);
+            this.comboBoxModes.Location = new System.Drawing.Point(254, 12);
             this.comboBoxModes.Name = "comboBoxModes";
             this.comboBoxModes.Size = new System.Drawing.Size(121, 21);
             this.comboBoxModes.TabIndex = 4;
+            this.comboBoxModes.SelectedIndexChanged += new System.EventHandler(this.comboBoxModes_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -124,22 +127,42 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // labelPlaybackSpeed
+            // 
+            this.labelPlaybackSpeed.AutoSize = true;
+            this.labelPlaybackSpeed.Location = new System.Drawing.Point(254, 76);
+            this.labelPlaybackSpeed.Name = "labelPlaybackSpeed";
+            this.labelPlaybackSpeed.Size = new System.Drawing.Size(27, 13);
+            this.labelPlaybackSpeed.TabIndex = 6;
+            this.labelPlaybackSpeed.Text = "x1.0";
+            // 
+            // labelPosition
+            // 
+            this.labelPosition.AutoSize = true;
+            this.labelPosition.Location = new System.Drawing.Point(254, 137);
+            this.labelPosition.Name = "labelPosition";
+            this.labelPosition.Size = new System.Drawing.Size(34, 13);
+            this.labelPosition.TabIndex = 6;
+            this.labelPosition.Text = "00:00";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(423, 262);
+            this.Controls.Add(this.labelPosition);
+            this.Controls.Add(this.labelPlaybackSpeed);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBoxModes);
             this.Controls.Add(this.buttonLoad);
             this.Controls.Add(this.trackBarPlaybackPosition);
-            this.Controls.Add(this.trackBar1);
+            this.Controls.Add(this.trackBarPlaybackRate);
             this.Controls.Add(this.buttonStop);
             this.Controls.Add(this.buttonPlay);
             this.Name = "MainForm";
             this.Text = "NAudio SoundTouch Demo";
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarPlaybackRate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPlaybackPosition)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -150,13 +173,15 @@
 
         private System.Windows.Forms.Button buttonPlay;
         private System.Windows.Forms.Button buttonStop;
-        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.TrackBar trackBarPlaybackRate;
         private System.Windows.Forms.Button buttonLoad;
         private System.Windows.Forms.ComboBox comboBoxModes;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TrackBar trackBarPlaybackPosition;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label labelPlaybackSpeed;
+        private System.Windows.Forms.Label labelPosition;
     }
 }
 
